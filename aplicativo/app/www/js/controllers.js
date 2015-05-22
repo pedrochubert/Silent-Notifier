@@ -33,96 +33,14 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('notificationsCtrl', function($scope, $state, $http) {
+.controller('notificationsCtrl', function($scope, $state) {
   $scope.notifications= [
-  
-  {title: "Campainha tocou!"},
-
-  {title: "Microondas apitou!"}];
-
+  { title: "Campainha tocou!"}];
   $scope.toNotification= function(title){
     $state.go('app.notification',{'title':title});
   };
 
-  //Carriots
-    var Carriots = (function() {
-      var defaultOptions = {
-        apiKey: '797d069957c5c46cc0fc78c73565d07f51d6391cf3e5863f4ba4156de05c543e',
-        apiUrl: 'http://api.carriots.com/'
-      };
-
-      //Get Data
-      function get(deviceId, options) {
-        if (!deviceId) throw new Error('Device ID is not defined');
-
-        return($http({
-          method: 'GET',
-          url: defaultOptions.apiUrl + 'devices/' + deviceId + '/streams/',
-          data: options,
-          headers: {
-            'carriots.apiKey': defaultOptions.apiKey
-          }
-        }));
-      }
-
-      //Send Data
-      function send(options) {
-        return($http({
-          url: defaultOptions.apiUrl + 'streams/',
-          method: 'POST',
-          data: options,
-          headers: {
-            'carriots.apiKey': defaultOptions.apiKey,
-            'Content-Type': 'text/plain; charset=utf-8'
-          },
-        }));
-      }
-
-      return ({
-        get: get,
-        send: send
-      });
-    }());
-    //Carriots End
-
-    //Variables (Default values) //EXEMPLO RECEPÇÃO
-    $scope.deviceId='campainha@gtperegrino.gtperegrino';
-    $scope.jsonData=JSON.stringify({
-      sort: 'at',
-      order: -1
-    });
-      
-    $scope.getData = function(){
-      Carriots.get($scope.deviceId, $scope.jsonData)
-      .success(function(res){
-          console.log(res.result[0]);
-          $scope.notifications = res.result;
-      });
-      
-    };
-    $scope.getData();
-    
-    //Variables (Default values) EXEMPLO ENVIO
-    $scope.jsonData=JSON.stringify({
-      "protocol": "v1",
-      "checksum": "",
-      "device": "campainha@gtperegrino.gtperegrino",
-      "at": "now",
-      "data": {
-        "coffees": 150
-      }
-    });
-      
-
-    $scope.sendData = function () {
-      Carriots.send($scope.jsonData)
-      .then(function (res) {
-          console.log(res);
-          $scope.responseData = JSON.stringify(res);
-      });
-    };
-    $scope.sendData();
-  })
+})
 
 .controller('notificationCtrl', function($scope, $stateParams) {
 });
