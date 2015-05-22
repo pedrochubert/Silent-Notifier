@@ -33,9 +33,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('notificationsCtrl', function($scope, $state) {
-  $scope.notifications= [
-  { title: "Campainha tocou!"}];
+.controller('notificationsCtrl', function($scope, $state, $http) {
+  $scope.notifications= [];
   $scope.toNotification= function(title){
     $state.go('app.notification',{'title':title});
   };
@@ -81,7 +80,28 @@ angular.module('starter.controllers', [])
     }());
     //Carriots End
 
+    //Variables (Default values)
+    $scope.deviceId='campainha@gtperegrino.gtperegrino';
+    $scope.jsonData=JSON.stringify({
+      sort: 'at',
+      order: -1
+    });
     
+    $scope.getData = function(){
+      Carriots.get($scope.deviceId, $scope.jsonData)
+      .success(function(res){
+          console.log(res);
+          console.log($scope.notifications);
+          $scope.notifications = res.result;
+      });
+    };
+
+    $scope.getData();
+
+    function Decode(device){
+      var titledecoded = device.data.title;
+      
+    }
 })
 
 .controller('notificationCtrl', function($scope, $stateParams) {
