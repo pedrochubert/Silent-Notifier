@@ -1,0 +1,12 @@
+<ion-view view-title="SilentNotifier">
+  <ion-nav-bar class="bar-positive"> <!--DECLARAÇÃO DE COR-->
+  </ion-nav-bar> <!--DECLARAÇÃO DE COR-->
+  <ion-content>
+    <ion-list>   <!--MUDANÇA DE COR-->
+      <ion-item class="item-calm" ng-repeat="notification in notifications" ng-click="toNotification(notification.title)">
+        {{notification.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+

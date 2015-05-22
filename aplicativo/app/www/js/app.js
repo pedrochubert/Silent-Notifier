@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url: "/notifications",
       views: {
         'menuContent': {
-          templateUrl: "templates/playlists.html",
+          templateUrl: "templates/home.html",
           controller: 'notificationsCtrl'
         }
       }
