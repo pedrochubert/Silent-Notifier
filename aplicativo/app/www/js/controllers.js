@@ -93,15 +93,12 @@ angular.module('starter.controllers', [])
           console.log(res);
           console.log($scope.notifications);
           $scope.notifications = res.result;
+          console.log($scope.notifications.length);
       });
     };
 
     $scope.getData();
 
-    function Decode(device){
-      var titledecoded = device.data.title;
-      
-    }
 })
 
 .controller('notificationCtrl', function($scope, $stateParams) {
