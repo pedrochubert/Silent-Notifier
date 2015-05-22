@@ -39,7 +39,49 @@ angular.module('starter.controllers', [])
   $scope.toNotification= function(title){
     $state.go('app.notification',{'title':title});
   };
+  
+    //Carriots
+    var Carriots = (function() {
+      var defaultOptions = {
+        apiKey: '797d069957c5c46cc0fc78c73565d07f51d6391cf3e5863f4ba4156de05c543e', //Atualizada
+        apiUrl: 'http://api.carriots.com/'
+      };
 
+      //Get Data
+      function get(deviceId, options) {
+        if (!deviceId) throw new Error('Device ID is not defined');
+
+        return($http({
+          method: 'GET',
+          url: defaultOptions.apiUrl + 'devices/' + deviceId + '/streams/',
+          data: options,
+          headers: {
+            'carriots.apiKey': defaultOptions.apiKey
+          }
+        }));
+      }
+
+      //Send Data
+      function send(options) {
+        return($http({
+          url: defaultOptions.apiUrl + 'streams/',
+          method: 'POST',
+          data: options,
+          headers: {
+            'carriots.apiKey': defaultOptions.apiKey,
+            'Content-Type': 'text/plain; charset=utf-8'
+          },
+        }));
+      }
+
+      return ({
+        get: get,
+        send: send
+      });
+    }());
+    //Carriots End
+
+    
 })
 
 .controller('notificationCtrl', function($scope, $stateParams) {
