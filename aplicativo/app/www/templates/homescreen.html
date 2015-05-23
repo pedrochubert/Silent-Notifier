@@ -1,8 +1,17 @@
 <ion-view view-title="Suas notificações">
+<ion-nav-bar class="bar-stable">
+      <ion-nav-buttons side="right">
+        <button ng-click="clearNotifications()" class="button button-icon button-clear ion-ios-checkmark-outline" >
+        </button>
+      </ion-nav-buttons>
+
+    </ion-nav-bar>
+
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="notification in notifications" ng-click="toNotification(notification.title)">
         {{notification.data.title}}
+        <p>{{notification.data.hour}}</p>
       </ion-item>
     </ion-list>
   </ion-content>
