@@ -35,11 +35,14 @@ angular.module('starter.controllers', [])
 
 .controller('notificationsCtrl', function($scope, $state, $http) {
   $scope.notifications= [];
+  
+   //Função do clique (tela de edição)
   $scope.toNotification= function(title){
     $state.go('app.notification',{'title':title});
   };
-  
-    //Carriots
+  //Função do clique ( tela de edição)
+
+      //Carriots
     var Carriots = (function() {
       var defaultOptions = {
         apiKey: '797d069957c5c46cc0fc78c73565d07f51d6391cf3e5863f4ba4156de05c543e', //Atualizada
@@ -73,9 +76,22 @@ angular.module('starter.controllers', [])
         }));
       }
 
+      function clearNotifications(deviceId,options){
+        return($http({
+          url: defaultOptions.apiUrl + 'devices/' + deviceId + '/streams/',
+          method: 'DELETE',
+          data: options,
+          headers: {
+            'carriots.apiKey': defaultOptions.apiKey,
+            'Content-Type': 'text/plain; charset=utf-8'
+          }
+        }));
+      }
+
       return ({
         get: get,
-        send: send
+        send: send,
+        clear: clearNotifications
       });
     }());
     //Carriots End
@@ -87,17 +103,26 @@ angular.module('starter.controllers', [])
       order: -1
     });
     
+    //Função que busca as notificações
     $scope.getData = function(){
       Carriots.get($scope.deviceId, $scope.jsonData)
       .success(function(res){
           console.log(res);
-          console.log($scope.notifications);
-          $scope.notifications = res.result;
-          console.log($scope.notifications.length);
+          console.log($scope.notifications); //Mostra o Array 
+          if(res.result){
+            $scope.notifications = res.result.reverse(); //Ordena o array
+          } 
       });
     };
 
-    $scope.getData();
+    setInterval($scope.getData, 3000); //Tempo de refresh das notificações
+    //$scope.getData();
+
+    $scope.clearNotifications = function(){
+        Carriots.clear($scope.deviceId);
+        $scope.notifications = [];
+    }
+
 
 })
 
