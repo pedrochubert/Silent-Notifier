@@ -1,5 +1,6 @@
 angular.module('starter.controllers', [])
 
+//Código do template
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
@@ -32,24 +33,26 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
+//Código do template
 
 .controller('notificationsCtrl', function($scope, $state, $http) {
-  $scope.notifications= [];
   
-   //Função do clique (tela de edição)
+  //Notifications array
+  $scope.notifications= [];
+
+   //Edit function
   $scope.toNotification= function(title){
     $state.go('app.notification',{'title':title});
   };
-  //Função do clique ( tela de edição)
 
-      //Carriots
+    //Carriots
     var Carriots = (function() {
       var defaultOptions = {
         apiKey: '797d069957c5c46cc0fc78c73565d07f51d6391cf3e5863f4ba4156de05c543e', //Atualizada
         apiUrl: 'http://api.carriots.com/'
       };
 
-      //Get Data
+      //Data acquisition (Get)
       function get(deviceId, options) {
         if (!deviceId) throw new Error('Device ID is not defined');
 
@@ -63,7 +66,7 @@ angular.module('starter.controllers', [])
         }));
       }
 
-      //Send Data
+      //Data sending (Send)
       function send(options) {
         return($http({
           url: defaultOptions.apiUrl + 'streams/',
@@ -76,6 +79,7 @@ angular.module('starter.controllers', [])
         }));
       }
 
+      //Function used to clear notifications
       function clearNotifications(deviceId,options){
         return($http({
           url: defaultOptions.apiUrl + 'devices/' + deviceId + '/streams/',
@@ -103,22 +107,31 @@ angular.module('starter.controllers', [])
       order: -1
     });
     
-    //Função que busca as notificações
+    //Notification fetching
     $scope.getData = function(){
       Carriots.get($scope.deviceId, $scope.jsonData)
       .success(function(res){
-          console.log(res);
-          console.log($scope.notifications); //Mostra o Array 
-          if(res.result){
-            $scope.notifications = res.result.reverse(); //Ordena o array
+          //Print functions
+          console.log(res); //Show the complete result in log
+          console.log($scope.notifications); //Show the notification in log
+
+          
+
+          //Cryptography
+
+          //Cryptography
+          if(res.result){ //Notification ordering
+            $scope.notifications = res.result.reverse(); 
           } 
+          console.log(res.result.productID);
       });
     };
 
     setInterval($scope.getData, 3000); //Tempo de refresh das notificações
     //$scope.getData();
 
-    $scope.clearNotifications = function(){
+    //Function that calls the notification deletion
+    $scope.clearNotifications = function(){ //
         Carriots.clear($scope.deviceId);
         $scope.notifications = [];
     }
