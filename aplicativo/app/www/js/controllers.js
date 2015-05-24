@@ -36,8 +36,7 @@ angular.module('starter.controllers', [])
 //Código do template
 
 .controller('notificationsCtrl', function($scope, $state, $http, $cordovaVibration) {
-  //Cordova Vibration 
-
+ 
   //Notifications array
   $scope.notifications= [];
 
@@ -154,7 +153,7 @@ angular.module('starter.controllers', [])
 
     $scope.comparison = $scope.notifications.length;
 
-    setInterval($scope.getData, 3000); //Tempo de refresh das notificações
+    setInterval($scope.getData, 100); //Tempo de refresh das notificações
     //$scope.getData();
 
     //Function that calls the notification deletion
