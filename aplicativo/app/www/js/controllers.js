@@ -48,7 +48,7 @@ angular.module('starter.controllers', [])
     //Carriots
     var Carriots = (function() {
       var defaultOptions = {
-        apiKey: '042dc072a5a074ed4fea90beebcf427fd370875b7436bca6fbe93c85a8b64ce6', //Atualizada
+        apiKey: '797d069957c5c46cc0fc78c73565d07f51d6391cf3e5863f4ba4156de05c543e', //Atualizada
         apiUrl: 'http://api.carriots.com/'
       };
 
@@ -101,7 +101,7 @@ angular.module('starter.controllers', [])
     //Carriots End
 
     //Variables (Default values)
-    $scope.deviceId='defaultDevice@pedrochubert.pedrochubert';
+    $scope.deviceId='campainha@gtperegrino.gtperegrino';
     $scope.jsonData=JSON.stringify({
       sort: 'at',
       order: -1
@@ -118,7 +118,6 @@ angular.module('starter.controllers', [])
           //Cryptography
 
           //Cryptography
-
 
           //Notification ordering
           if(res.result){ 
@@ -154,7 +153,7 @@ angular.module('starter.controllers', [])
 
     $scope.comparison = $scope.notifications.length;
 
-    setInterval($scope.getData, 3000); //Tempo de refresh das notificações
+    setInterval($scope.getData, 100); //Tempo de refresh das notificações
     //$scope.getData();
 
     //Function that calls the notification deletion
