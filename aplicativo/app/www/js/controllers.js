@@ -35,8 +35,9 @@ angular.module('starter.controllers', [])
 })
 //Código do template
 
-.controller('notificationsCtrl', function($scope, $state, $http) {
-  
+.controller('notificationsCtrl', function($scope, $state, $http, $cordovaVibration) {
+  //Cordova Vibration 
+
   //Notifications array
   $scope.notifications= [];
 
@@ -113,17 +114,25 @@ angular.module('starter.controllers', [])
       .success(function(res){
           //Print functions
           console.log(res); //Show the complete result in log
-          console.log($scope.notifications); //Show the notification in log
-
-          
+          console.log($scope.notifications); //Show the notification in log       
 
           //Cryptography
 
           //Cryptography
-          if(res.result){ //Notification ordering
+
+          //Notification ordering
+          if(res.result){ 
             $scope.notifications = res.result.reverse(); 
           } 
-          console.log(res.result.productID);
+          //Notification ordering
+          
+          //Comparison + Vibration
+          var comparison = $scope.notifications.length;
+          if ($scope.notifications.length > comparison){
+            navigator.vibrate(1000);
+          }
+          //Comparison + Vibration
+
       });
     };
 
