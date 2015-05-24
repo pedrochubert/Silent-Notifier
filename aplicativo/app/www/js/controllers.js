@@ -126,15 +126,33 @@ angular.module('starter.controllers', [])
           } 
           //Notification ordering
           
-          //Comparison + Vibration
-          var comparison = $scope.notifications.length;
-          if ($scope.notifications.length > comparison){
-            navigator.vibrate(1000);
+          //Vibration
+          if ($scope.notifications.length > $scope.comparison){
+            console.log('Duração da vibração: ', getConfig());
+            
+            var firstLaunch = sessionStorage.getItem('launched')
+            if(!firstLaunch) {
+              sessionStorage.setItem('launched', Date.now());
+            }else{
+              navigator.vibrate(getConfig() || 1000);
+            }
           }
           //Comparison + Vibration
-
+          $scope.comparison = $scope.notifications.length;
       });
     };
+
+    //Vibration setting storage
+    function saveConfig(){
+      localStorage.setItem('duration', duration);
+    };
+
+    //Vibration setting access
+    function getConfig(){
+      return localStorage.getItem('duration');
+    };
+
+    $scope.comparison = $scope.notifications.length;
 
     setInterval($scope.getData, 3000); //Tempo de refresh das notificações
     //$scope.getData();
@@ -148,5 +166,26 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('notificationCtrl', function($scope, $stateParams) {
+.controller('notificationCtrl', function($scope, $stateParams, $state) { 
+    $scope.duration = 1000;
+   
+   //Vibration setting storage
+    function saveConfig(){
+      localStorage.setItem('duration', $scope.duration);
+    };
+
+    //Vibration setting access
+    function getConfig(){
+      return localStorage.getItem('duration');
+    };
+
+    $scope.setSettings = function() {
+      saveConfig();
+      $state.go('app.notifications');
+    }
+
+    $scope.setDuration = function(){
+      console.log("Setando duração: ", $scope.duration);
+      saveConfig();
+    };
 });

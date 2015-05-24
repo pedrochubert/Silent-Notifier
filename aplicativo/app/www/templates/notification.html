@@ -1,10 +1,10 @@
 <ion-view view-title="Editar">
 <ion-nav-bar class="bar-stable">
       <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-ios-checkmark-outline" >
+        <button  ng-click="setSettings()" class="button button-icon button-clear ion-ios-checkmark-outline" >
         </button>
-      </ion-nav-buttons>
 
+      </ion-nav-buttons>
     </ion-nav-bar>
 
   <ion-content>
@@ -26,7 +26,7 @@
 
   <div class="item range">
   <i class="icon ion-volume-low"></i>
-  <input type="range" name="volume" ng-model="duration">
+  <input type="range" name="volume" step="1000" min="1000" max="5000" value="{{duration}}" ng-model="duration" ng-change="setDuration()">
   <i class="icon ion-volume-high"></i>
 </div>
 
